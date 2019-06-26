@@ -38,8 +38,8 @@ def earliest_ancestor(ancestors, starting_node):
 
     # (track the longest path length and the earliest ancestor node)
     # max = 1 because every path is at least 1 long - earliest = -1 because thats what we return when none of the nodes match our target
-    max_path_len = 1
-    earliest_ancestor = -1
+    max_path_len = 1 
+    earliest_ancestor = -1 
 
     # Do a BFS from starting_node to each other node
     q = Queue() # - list of lists with paths in them
@@ -51,7 +51,7 @@ def earliest_ancestor(ancestors, starting_node):
 
         # if the length of our current path == the max path variable AND our current room is smaller (or comes first alphabetically) do the following..
         # OR if the length of our current path is greater than the max path variable we will do the following..
-        if (len(path) == max_path_len and current_room < earliest_ancestor) or (len(path) > max_path_len):
+        if (len(path) > max_path_len) or (len(path) == max_path_len and current_room < earliest_ancestor):
             earliest_ancestor = current_room # setting a new earliest ancestor 
             max_path_len = len(path) # setting a new max path length
 
