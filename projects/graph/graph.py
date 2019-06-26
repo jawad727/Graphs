@@ -22,29 +22,49 @@ class Graph:
         else:
             raise IndexError("That vertex does not exist")
 
-    def bft(self, starting_vertex):
+    def bft(self, starting_vertex): # Checks first floor first with all rooms then second etc
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
-        q = Queue()
-        q.enqueue(starting_vertex)
-        visited = set()
-        while q.size() > 0:
-            v = q.dequeue()
-            if v not in visited:
-                print(v)
-                visited.add(v)
+        q = Queue() # List of all rooms we need to go to starts off blank
+        q.enqueue(starting_vertex) # Adds room to list that we will search
+        visited = set() # List of rooms we have visited, it starts off blank
 
-                for next_vert in self.verticles[v]:
-                    q.enqueue(next_vert)
+        while q.size() > 0: # While list Q a value we will searcch
+            current_vert = q.dequeue() # Cross off the newest room in list and look in it ; current_vert = current room
+            if current_vert not in visited: # If this room we are looking at isnt in list SET do the following
+                print(current_vert) # Print room to add to continuously building path
+                visited.add(current_vert) # Add to visited so we wont go back there
+
+
+                for neighbor_vert in self.vertices[current_vert]: # {room1 : [room2, room3, room4]}
+                    q.enqueue(neighbor_vert) 
         
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+
+        s = Stack() # List of all rooms we need to go to starts off blank
+        s.push(starting_vertex) # Adds starting floor
+        visited = set() # List of room we have visited, starts off blank
+
+        while s.size() > 0: # While there is at lease one room we need to explore do the following
+
+            v = s.pop() # Crosses off one room and looks in it ; v = current room
+
+            if v not in visited: # If we havent looked in the current room do this
+
+                print(v) # Print that we looked in it
+                visited.add(v) # Add current room into visited rooms list
+
+                for next_vert in self.vertices[v]: # For every next_room we see in verticies[current_room] add it to the list of all rooms we need to search
+                    s.push(next_vert)
+
+
+
     def dft_recursive(self, starting_vertex):
         """
         Print each vertex in depth-first order
@@ -52,13 +72,38 @@ class Graph:
         This should be done using recursion.
         """
         pass  # TODO
-    def bfs(self, starting_vertex, destination_vertex):
+
+        
+        def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
         """
-        pass  # TODO
+        q = Queue() # Commander he has the list of all the possible paths we can take
+        q.enqueue([starting_vertex]) # Adding starting room to the path
+        visited = set() # Commander Set has a empty list
+
+        while q.size() > 0: # While commander Q has more than 0 rooms to search
+            path = q.dequeue() # Path = [403] path equals the path created earlier
+            current_room = path[-1] # Current room is just last value in the PATH array
+
+            if current_room not in visited: # If commander Set does not have this room in his list do the following
+                if current_room == destination_vertex: # if room were in right now equals the destination return the path we took to get here
+                    return path
+                visited.add(current_room) # tell commander Set to add room to visited rooms
+
+                for room_same_floor in self.vertices[current_room]:
+
+                    copy_path = list(path) # copy_path = [...5th_floor_rooms, 401, 402] ; current_room = 403
+                    copy_path.append(room_same_floor) # adding neighboring rooms
+                    q.enqueue(copy_path)
+        return None
+
+
+
+
+
     def dfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing a path from
