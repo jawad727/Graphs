@@ -87,8 +87,6 @@ class SocialGraph:
 
         The key is the friend's ID and the value is the path.
         """
-        # friendsGraph = {1: {1}}
-        # userId = 1
        
         q = Queue()
         q.enqueue([userID]) 
@@ -97,7 +95,6 @@ class SocialGraph:
         while q.size() > 0:
             path = q.dequeue()
             current_friend = path[-1]
-            
 
             if current_friend not in visited:
                 visited[current_friend] = path
